@@ -16,4 +16,5 @@ jobs:
         with:
           python-version: 3.8
           architecture: "x64"
+        continue-on-error: false
       - run: python beta/test_000_main.py
