@@ -1,4 +1,4 @@
-name: Python Pull Request Workflow
+name: Pull Request-Master
 on:
   pull_request:
     branches:
