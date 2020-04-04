@@ -42,6 +42,7 @@ class MainTest(unittest.TestCase):
 
         self.assertEqual(code_files, test_files)
         # tests = []
+        print(dir_path)
 
         for tf in test_files:
             os.system(f"python {dir_path}/test_{tf}")
