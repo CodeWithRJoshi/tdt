@@ -45,7 +45,7 @@ class MainTest(unittest.TestCase):
         print(dir_path)
 
         for tf in test_files:
-            os.system(f"python {dir_path}/test_{tf}")
+            os.system("python" + " " + dir_path + "/test_" + tf)
 
 
 
