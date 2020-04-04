@@ -17,14 +17,3 @@ jobs:
           python-version: 3.8
           architecture: "x64"
       - run: python beta/test_000_main.py
-      - continue-on-error: false
-      # - name: Run unit tests
-      # run: |
-      #   pip install unittest
-      # - name: Python unittests
-      #   uses: skx/github-action-tester@master
-      #   with:
-      #     reporter: "github-test-case"
-      #     script: .github/main.sh
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
