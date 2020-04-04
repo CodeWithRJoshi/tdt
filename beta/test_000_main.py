@@ -45,10 +45,10 @@ class MainTest(unittest.TestCase):
         print(dir_path)
 
         for tf in test_files:
-            # formatted strings don't well with GitHub actions! :D
-            py_script = f"python {dir_path}/test_{tf}"
-            os.system(py_script)
-            # os.system("python" + " " + dir_path + "/test_" + tf)
+            # formatted strings don't well with GitHub actions! :(
+            # py_script = f"python {dir_path}/test_{tf}"
+            # os.system(py_script)
+            os.system("python" + " " + dir_path + "/test_" + tf)
 
 
 
