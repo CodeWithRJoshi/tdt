@@ -1,7 +1,8 @@
 name: Python Pull Request Workflow
 on:
   pull_request:
-    branches: [master]
+    branches:
+      - master
 jobs:
   qa:
     name: Quality check

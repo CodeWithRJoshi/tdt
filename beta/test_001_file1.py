@@ -8,7 +8,7 @@ class TestSimple(unittest.TestCase):
         ip = 2
         exp_op = 2
         op = file1.simple(ip)
-        self.assertEqual(exp_op, op)
+        self.assertEqual(exp_op, op+1)
 
     def test_simple_02(self):
         ip = 2
