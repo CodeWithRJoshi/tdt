@@ -1,14 +1,16 @@
-def simple(p=None):
-    return p
+def addition(*args):
+    # do something here
+    # return sum(args)
 
 
-def simple2(p=None):
-    pass
+def substract(a, b):
+    # return a-b
 
 
 def main():
-    pass
+    print(addition(2, 3))
+    print(substract(2, 3))
 
 
 if __name__ == "__main__":
-    pass
+    main()
