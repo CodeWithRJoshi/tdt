@@ -1,4 +1,4 @@
-name: Push Event-Dev
+name: Push Event
 on:
   push:
     branches: [dev, master]
