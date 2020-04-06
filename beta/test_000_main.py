@@ -20,7 +20,7 @@ class MainTest(unittest.TestCase):
         super(MainTest, self).__init__(*args, **kwargs)
         self.UPDATED_LATER = {}
         # self.UPDATED_LATER = {'cf13f5c', 'a33998d'}
-        self.LAST_UPDATE = '031655b'
+        self.LAST_UPDATE = '90ef2d6'
         self.BASE_PATH = os.path.dirname(os.path.realpath(__file__))
 
     class setUpClass():
