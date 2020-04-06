@@ -9,15 +9,18 @@ import time
 import unittest
 import subprocess
 
+
 def run(*args):
     return subprocess.run(['git'] + list(args), capture_output=True)
+
 
 class MainTest(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super(MainTest, self).__init__(*args, **kwargs)
-        self.UPDATED_LATER = {'cf13f5c', 'a33998d'}
-        self.LAST_UPDATE = '802f071'
+        self.UPDATED_LATER = {}
+        # self.UPDATED_LATER = {'cf13f5c', 'a33998d'}
+        self.LAST_UPDATE = '802f07'
         self.BASE_PATH = os.path.dirname(os.path.realpath(__file__))
 
     class setUpClass():
@@ -51,10 +54,8 @@ class MainTest(unittest.TestCase):
 
         self.assertEqual(code_files, test_files)
 
-
     def test_get_new_files_only(self):
         file_list = set()
-
 
         #################################
         # Add untracked files to the list, for whatever reason  👨‍💻 !
@@ -67,8 +68,22 @@ class MainTest(unittest.TestCase):
         untracked_files = run('ls-files', '--others', '--exclude-standard')
         untracked_files = str(untracked_files.stdout, 'utf8')
         untracked_files = untracked_files.split('\n')
-        untracked_files = [file for file in untracked_files if len(file.strip()) > 0]
+        untracked_files = [
+            file for file in untracked_files if len(file.strip()) > 0]
         for u_f in untracked_files:
+            file_list.add(os.path.abspath(u_f))
+
+        #################################
+        #################################
+
+        # Modified files
+        modified_files = run('ls-files', '--modified')
+        modified_files = str(modified_files.stdout, 'utf8')
+        modified_files = modified_files.split('\n')
+        modified_files = [
+            file for file in modified_files if len(file.strip()) > 0]
+        for u_f in modified_files:
+            # print(os.path.abspath(u_f))
             file_list.add(os.path.abspath(u_f))
 
         #################################
@@ -76,39 +91,43 @@ class MainTest(unittest.TestCase):
 
         # Nobody likes errors all the time
         # Only add the changed modified files for the test!
-
-
-        STD_HASH = run("rev-list", "--ancestry-path", f"{self.LAST_UPDATE}..HEAD")
+        STD_HASH = run("rev-list", "--ancestry-path",
+                       f"{self.LAST_UPDATE}..HEAD")
 
         UPDATED_LATER_FULL = set()
         for short_hash in self.UPDATED_LATER:
             long_hash = run("rev-parse", short_hash)
             long_hash = str(long_hash.stdout, 'utf8').strip()
             UPDATED_LATER_FULL.add(long_hash)
-
-
-
-        STD_HASH  = str(STD_HASH.stdout,  'utf8')
+        STD_HASH = str(STD_HASH.stdout,  'utf8')
         STD_HASH = STD_HASH.split('\n')
-        STD_HASH = [h for h in STD_HASH if len(h) == 40] # It is 40 characters!
+        STD_HASH = [h for h in STD_HASH if len(
+            h) == 40]  # It is 40 characters!
         HASH_TO_CHECK = [op for op in STD_HASH if not op in UPDATED_LATER_FULL]
         # print(len(STD_HASH), len(HASH_TO_CHECK))
 
         # for check in HASH_TO_CHECK:
         for check in HASH_TO_CHECK:
-            files_modified = run('diff-tree', '--no-commit-id', '--name-only', '-r', check)
+            files_modified = run(
+                'diff-tree', '--no-commit-id', '--name-only', '-r', check)
             # print(files_modified.stdout)
 
             files_modified = str(files_modified.stdout, 'utf8').strip()
-            files_modified  = files_modified.split('\n')
+            files_modified = files_modified.split('\n')
             files_modified = [os.path.abspath(file) for file in files_modified]
-            files_modified = [file for file in files_modified if file.startswith(self.BASE_PATH) and file.endswith('.py')]
+            files_modified = [file for file in files_modified if file.startswith(
+                self.BASE_PATH) and file.endswith('.py')]
             for file in files_modified:
                 file_list.add(os.path.abspath(file))
 
-            file_list = {os.path.basename(f).lstrip('test_') for f in file_list}
+            file_list = {os.path.basename(f)
+                         for f in file_list}
+            file_list = {f.lstrip('test_')
+                         for f in file_list}
 
-
+            print('****')
+            print(file_list)
+            print('****')
 
         # Cleanup for files that shouldn't be testsed!
         to_remove = ['000_main.py']
@@ -120,7 +139,6 @@ class MainTest(unittest.TestCase):
                 pass
                 # print(e)
 
-
         for tf in file_list:
             # print('Yoo!',tf)
             # py_script = f"{self.BASE_PATH}/test_{tf}"
@@ -131,7 +149,7 @@ class MainTest(unittest.TestCase):
             # op = fil.main()
             py_script = f"python {self.BASE_PATH}/test_{tf}"
             op = os.system(py_script)
-            print("**",op)
+            print("**", op)
             if op != 0:
                 exit('Test failed, exiting...')
 
