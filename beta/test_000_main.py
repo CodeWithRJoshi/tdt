@@ -20,7 +20,7 @@ class MainTest(unittest.TestCase):
         super(MainTest, self).__init__(*args, **kwargs)
         self.UPDATED_LATER = {}
         # self.UPDATED_LATER = {'cf13f5c', 'a33998d'}
-        self.LAST_UPDATE = '802f07'
+        self.LAST_UPDATE = '031655b'
         self.BASE_PATH = os.path.dirname(os.path.realpath(__file__))
 
     class setUpClass():
@@ -120,13 +120,18 @@ class MainTest(unittest.TestCase):
             for file in files_modified:
                 file_list.add(os.path.abspath(file))
 
-            file_list = {os.path.basename(f)
-                         for f in file_list}
-            file_list = {f.lstrip('test_')
-                         for f in file_list}
+        file_list = {os.path.basename(f)
+                     for f in file_list}
+        file_list = {f.lstrip('test_')
+                     for f in file_list}
 
         # Cleanup for files that shouldn't be testsed!
         to_remove = ['000_main.py']
+        # to_remove_code = [f"{self.BASE_PATH}/{f}" for f in to_remove]
+        # to_remove_test = [f"{self.BASE_PATH}/test_{f}" for f in to_remove]
+
+        # to_remove = [*to_remove_code, *to_remove_test]
+
         # test_to_remove = ['000_main.py']
         for f in to_remove:
             try:
