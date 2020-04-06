@@ -1,10 +1,11 @@
 def addition(*args):
     # do something here
-    # return sum(args)
+    return sum(args)
 
 
 def substract(a, b):
-    # return a-b
+    # pass
+    return a-b
 
 
 def main():
