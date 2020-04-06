@@ -1,9 +1,10 @@
 def addition(*args):
     # do something here
-    # return sum(args)
+    return sum(args)
 
 
 def substract(a, b):
+    pass
     # return a-b
 
 
