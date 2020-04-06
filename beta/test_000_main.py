@@ -125,10 +125,6 @@ class MainTest(unittest.TestCase):
             file_list = {f.lstrip('test_')
                          for f in file_list}
 
-            print('****')
-            print(file_list)
-            print('****')
-
         # Cleanup for files that shouldn't be testsed!
         to_remove = ['000_main.py']
         # test_to_remove = ['000_main.py']
@@ -139,6 +135,8 @@ class MainTest(unittest.TestCase):
                 pass
                 # print(e)
 
+        file_list = list(file_list)
+        file_list.sort()
         for tf in file_list:
             # print('Yoo!',tf)
             # py_script = f"{self.BASE_PATH}/test_{tf}"
@@ -147,11 +145,17 @@ class MainTest(unittest.TestCase):
             # tf =
             # fil = importlib.import_module(f"{self.BASE_PATH}/test_{tf}")
             # op = fil.main()
-            py_script = f"python {self.BASE_PATH}/test_{tf}"
-            op = os.system(py_script)
-            print("**", op)
-            if op != 0:
-                exit('Test failed, exiting...')
+            print(f'Running {tf}')
+            try:
+                py_script = f"python {self.BASE_PATH}/test_{tf}"
+                op = os.system(py_script)
+                # print("**", op)
+                if op != 0:
+                    exit('Test failed, exiting...')
+            except Exception as e:
+                print(f'{tf} errorred!')
+            finally:
+                print(f'{tf} completed!')
 
 
 def main():

@@ -1,6 +1,6 @@
 import unittest
 import importlib
-file1 = importlib.import_module('003_file3')
+file1 = importlib.import_module('004_file4')
 
 
 class TestSimple(unittest.TestCase):
