@@ -4,8 +4,7 @@ def addition(*args):
 
 
 def substract(a, b):
-    pass
-    # return a-b
+    return a-b
 
 
 def main():
